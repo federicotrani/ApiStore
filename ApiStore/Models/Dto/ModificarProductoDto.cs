@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace ApiStore.Models.Dto;
 
-namespace ApiStore.Models;
-
-public class Producto
+public class ModificarProductoDto
 {
-    [Key]
     public int Id { get; set; }
     public string Nombre { get; set; }
     public string? Descripcion { get; set; }
@@ -12,4 +9,5 @@ public class Producto
     public int? Stock { get; set; }
     public string? RutaImagen { get; set; }
     public string? RutaImagenLocal { get; set; }
+    public IFormFile Imagen { get; set; }
 }
