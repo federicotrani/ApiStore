@@ -10,4 +10,7 @@ public class StoreDbContext : DbContext
     }
 
     public DbSet<Producto> Productos { get; set; }
+    public DbSet<Usuario> Usuarios { get; set; }    
+
+
 }
