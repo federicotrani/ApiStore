@@ -7,4 +7,5 @@ public class CrearProductoDto
     public decimal? Precio { get; set; }
     public int? Stock { get; set; }    
     public IFormFile Imagen{ get; set; }
+    public int Categoria { get; set; }
 }

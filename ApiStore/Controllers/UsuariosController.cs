@@ -17,33 +17,41 @@ namespace ApiStore.Controllers
 
         public UsuariosController(StoreDbContext context)
         {
+          
             _context = context;
         }
+
 
         [HttpPost("ValidarCredencial")]
         public async Task<IActionResult> ValidarCredencial([FromBody] UsuarioLoginDto usuario)
         {
-            var existeLogin = await _context.Usuarios
+            try
+            {
+                var existeLogin = await _context.Usuarios
                 .AnyAsync(x => x.Email.Equals(usuario.Email) && x.Password.Equals(usuario.Password));
 
-            Usuario usuarioLogin = await _context.Usuarios.FirstOrDefaultAsync(x => x.Email.Equals(usuario.Email) && x.Password.Equals(usuario.Password));
+                Usuario usuarioLogin = await _context.Usuarios.FirstOrDefaultAsync(x => x.Email.Equals(usuario.Email) && x.Password.Equals(usuario.Password));
 
-            
-            if (!existeLogin)
+
+                if (!existeLogin)
+                {
+                    return NotFound("Usuario No Existe");
+                }
+
+                LoginResponseDto loginReponse = new LoginResponseDto()
+                {
+                    Autenticado = existeLogin,
+                    Email = existeLogin ? usuarioLogin.Email : "",
+                    Nombre = existeLogin ? usuarioLogin.Nombre : "",
+                    IdRol = existeLogin ? usuarioLogin.IdRol : 0,
+                    Id = existeLogin ? usuarioLogin.Id : 0
+                };
+
+                return Ok(loginReponse);
+            }catch(Exception ex)
             {
-                return NotFound("Usuario No Existe");
+                return BadRequest(ex.Message);
             }
-
-            LoginResponseDto loginReponse = new LoginResponseDto()
-            {
-                Autenticado = existeLogin,
-                Email = existeLogin ? usuarioLogin.Email : "",
-                Nombre = existeLogin ? usuarioLogin.Nombre : "",
-                IdRol = existeLogin ? usuarioLogin.IdRol : 0,
-                Id = existeLogin ? usuarioLogin.Id : 0
-            };  
-
-            return Ok(loginReponse);
         }
     }
 }

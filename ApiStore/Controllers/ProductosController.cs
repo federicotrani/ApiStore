@@ -77,6 +77,7 @@ public class ProductosController : ControllerBase
                 Precio = crearProducto.Precio,
                 Descripcion = crearProducto.Descripcion,
                 Stock = crearProducto.Stock,
+                IdCategoria = crearProducto.Categoria
             };
 
             // Subida Archivo
