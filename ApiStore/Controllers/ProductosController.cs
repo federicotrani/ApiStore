@@ -2,6 +2,7 @@
 using ApiStore.Models;
 using ApiStore.Models.Dto;
 using ApiStore.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace ApiStore.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class ProductosController : ControllerBase
@@ -69,8 +71,7 @@ public class ProductosController : ControllerBase
     public async Task<IActionResult> CrearConImagen([FromForm] CrearProductoDto crearProducto)
     {
         try
-        {
-            
+        {            
             var producto = new Producto()
             {
                 Nombre = crearProducto.Nombre,
